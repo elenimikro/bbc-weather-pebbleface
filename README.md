@@ -1,5 +1,5 @@
 # BBC Weather Pebble Watch Face
-A pebble watchface that gets BBC weather data of your location. 
+A simple pebble watchface that gets BBC weather data of your location. This is not an official BBC weather app.
 
 ![BBC Weather Pebble Face](/resources/images/screenshot.png)
 
