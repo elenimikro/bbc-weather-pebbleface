@@ -1,10 +1,7 @@
-# bbc-weather-pebbleface
-A pebble watchface that gets BBC weather data
+# BBC Weather Pebble Watch Face
+A pebble watchface that gets BBC weather data of your location. 
 
-## Description
 ![BBC Weather Pebble Face](/resources/images/screenshot.png)
-
-This is a simple 
 
 ## Features
 1. Displays Time and Date
