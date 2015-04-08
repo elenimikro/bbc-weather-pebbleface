@@ -14,3 +14,4 @@ A simple pebble watchface that gets BBC weather data of your location. This is n
 ## Future Additions
 1. Configuration page for defining default location
 2. Add more weather icons
+3. Add a 3-day forecast
