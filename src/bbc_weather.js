@@ -8,7 +8,7 @@ var xhrRequest = function (url, type, callback) {
 };
 
 
-function locationSuccess(pos, id) {
+function locationSuccess(pos) {
   // Construct URL
   //var url = "http://open.live.bbc.co.uk/weather/feeds/en/2643123/observations.rss"; 
   console.log("latitude" + pos.coords.latitude + "and lon=" + pos.coords.longitude);
@@ -94,9 +94,20 @@ function locationSuccess(pos, id) {
   
 }
 
+function geoloc(latitude, longitude)
+{
+    this.coords = {};
+    this.coords.latitude=latitude;
+    this.coords.longitude=longitude;
+}
+
+
 function locationError(err) {
   console.log("Error requesting location!");
   console.log(err);
+  console.log("Setting up default location: Manchester, 53.48095, -2.23743");
+  var pos = new geoloc(53.48095, -2.23743);
+  locationSuccess(pos);
 }
 
 function getWeather() {

@@ -14,6 +14,17 @@
     "resources": {
         "media": [
             {
+                "file": "images/bbc_tiny.png",
+                "menuIcon": true,
+                "name": "IMAGE_BBC_TINY",
+                "type": "png"
+            },
+            {
+                "file": "images/screenshot.png",
+                "name": "IMAGE_SCREENSHOT",
+                "type": "png"
+            },
+            {
                 "file": "images/showers.png",
                 "name": "IMAGE_SHOWERS",
                 "type": "png"
@@ -45,7 +56,6 @@
             },
             {
                 "file": "images/bbc.png",
-                "menuIcon": true,
                 "name": "IMAGE_BBC",
                 "type": "png"
             },
