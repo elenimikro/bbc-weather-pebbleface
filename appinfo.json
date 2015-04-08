@@ -1,0 +1,72 @@
+{
+    "appKeys": {
+        "KEY_CONDITIONS": 1,
+        "KEY_IMAGE": 2,
+        "KEY_TEMPERATURE": 0,
+        "LOCATION_NAME": 20
+    },
+    "capabilities": [
+        "location"
+    ],
+    "companyName": "Pebble",
+    "longName": "BBC Weather",
+    "projectType": "native",
+    "resources": {
+        "media": [
+            {
+                "file": "images/showers.png",
+                "name": "IMAGE_SHOWERS",
+                "type": "png"
+            },
+            {
+                "file": "images/partly_cloudy.png",
+                "name": "IMAGE_PARTLY_CLOUDY",
+                "type": "png"
+            },
+            {
+                "file": "images/rain_with_sun.png",
+                "name": "IMAGE_RAIN_WITH_SUN",
+                "type": "png"
+            },
+            {
+                "file": "images/cloudy.png",
+                "name": "IMAGE_CLOUDY",
+                "type": "png"
+            },
+            {
+                "file": "images/clear.png",
+                "name": "IMAGE_CLEAR",
+                "type": "png"
+            },
+            {
+                "file": "images/light_cloud.png",
+                "name": "IMAGE_WEATHER_LIGHT_CLOUD",
+                "type": "png"
+            },
+            {
+                "file": "images/bbc.png",
+                "menuIcon": true,
+                "name": "IMAGE_BBC",
+                "type": "png"
+            },
+            {
+                "file": "images/sunny_intervals.png",
+                "name": "IMAGE_SUNNY_INTERVALS",
+                "type": "png"
+            },
+            {
+                "file": "images/sunny.png",
+                "name": "IMAGE_WEATHER_SUNNY",
+                "type": "png"
+            }
+        ]
+    },
+    "sdkVersion": "2",
+    "shortName": "BBC Weather",
+    "uuid": "06fa673d-2a2b-4d03-a879-4bd1965afa67",
+    "versionCode": 1,
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": true
+    }
+}
