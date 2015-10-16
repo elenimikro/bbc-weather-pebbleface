@@ -8,21 +8,27 @@ var xhrRequest = function (url, type, callback) {
 };
 
 
+// getting the location 
 function locationSuccess(pos) {
   // Construct URL
   //var url = "http://open.live.bbc.co.uk/weather/feeds/en/2643123/observations.rss"; 
   console.log("latitude" + pos.coords.latitude + "and lon=" + pos.coords.longitude);
   
-  //get geoname id and location name by calling ge
-  var url = "http://api.openweathermap.org/data/2.5/weather?lat=" +
-      pos.coords.latitude + "&lon=" + pos.coords.longitude;
+  //get geoname id and location name by calling geonames endpoint
+  //var old_url = "http://api.openweathermap.org/data/2.5/weather?lat=" +
+  //    pos.coords.latitude + "&lon=" + pos.coords.longitude;
+  //console.log(url);
+  
+  var url = "http://api.geonames.org/findNearbyPlaceNameJSON?lat=" + pos.coords.latitude + "&lng=" + pos.coords.longitude+"&username=demo";
   console.log(url);
   
   xhrRequest(url, 'GET',
     function(responseText){
       var json = JSON.parse(responseText);
-      var location_name = json.name;
-      var geoname_id = json.id;
+      var geoname = json.geonames[0];
+      console.log(geoname);
+      var location_name = geoname.name;
+      var geoname_id = geoname.geonameId;
       console.log(location_name);
       console.log(geoname_id);
       
@@ -88,7 +94,6 @@ function locationSuccess(pos) {
           );
         }      
       );
-      
     });
   
   
