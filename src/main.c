@@ -18,6 +18,7 @@ static TextLayer *s_time_layer;
 static TextLayer *s_date_layer;
 static BitmapLayer *s_weather_layer;
 static GBitmap *s_background_bitmap;
+static TextLayer *s_temperature_text_layer;
 static TextLayer *s_weather_text_layer;
 
 static void update_time() {
@@ -130,7 +131,8 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
   }
   
   // Assemble full string and display
-  snprintf(weather_layer_buffer, sizeof(weather_layer_buffer), "%s, %s, %s", temperature_buffer, conditions_buffer, location_buffer);
+  snprintf(weather_layer_buffer, sizeof(weather_layer_buffer), "%s, %s", conditions_buffer, location_buffer);
+  text_layer_set_text(s_temperature_text_layer, temperature_buffer);
   text_layer_set_text(s_weather_text_layer, weather_layer_buffer);
 }
 
@@ -176,6 +178,14 @@ static void main_window_load(Window *window) {
   bitmap_layer_set_bitmap(s_weather_layer, s_background_bitmap);
   layer_add_child(window_get_root_layer(window), bitmap_layer_get_layer(s_weather_layer));
   
+  //Create temperature text layer
+  s_temperature_text_layer = text_layer_create(GRect(76, 70, 69, 60));
+  text_layer_set_background_color(s_temperature_text_layer, GColorClear);
+  text_layer_set_text_color(s_temperature_text_layer, GColorBlack);
+  text_layer_set_text_alignment(s_temperature_text_layer, GTextAlignmentCenter);
+  text_layer_set_text(s_temperature_text_layer, " ");
+  
+  
   //Create weather text Layer
   s_weather_text_layer = text_layer_create(GRect(0, 115, 144, 80));
   text_layer_set_background_color(s_weather_text_layer, GColorClear);
@@ -184,6 +194,8 @@ static void main_window_load(Window *window) {
   text_layer_set_text(s_weather_text_layer, "Loading BBC Weather...");
   
   // Add it as a child layer to the Window's root layer
+  text_layer_set_font(s_temperature_text_layer, fonts_get_system_font(FONT_KEY_GOTHIC_28_BOLD));
+  layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_temperature_text_layer));
   text_layer_set_font(s_weather_text_layer, fonts_get_system_font(FONT_KEY_GOTHIC_24_BOLD));
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_weather_text_layer));
   
@@ -205,6 +217,7 @@ static void main_window_unload(Window *window) {
   bitmap_layer_destroy(s_weather_layer);
   
   // Destroy weather elements
+  text_layer_destroy(s_temperature_text_layer);
   text_layer_destroy(s_weather_text_layer);
 }
 
@@ -243,25 +256,6 @@ static void init() {
 static void deinit() {
   // Destroy Window
   window_destroy(s_main_window);
-}
-
-static void migrate_persist(void) {
-    uint32_t version = persist_read_int(STORAGE_VERSION_KEY); // defaults to 0 if key is missing.
-
-    if(version > CURRENT_STORAGE_VERSION) {
-        // This is more recent than what we expect; we can't know what happened, so delete it
-        clear_persist();
-    } else if(version == 2) {
-        read_v2_persist();
-        store_persist();
-    } else if(version == 1) {
-        read_v1_persist();
-        store_persist();
-    } else if(version == 0) {
-        // Again, just delete this - perhaps we have multiple unversioned types, or 0 is just too
-        // long ago to be worth handling.
-        clear_persist();
-    }
 }
 
 int main(void) {
