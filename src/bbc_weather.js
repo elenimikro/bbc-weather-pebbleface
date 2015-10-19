@@ -19,7 +19,7 @@ function locationSuccess(pos) {
   //    pos.coords.latitude + "&lon=" + pos.coords.longitude;
   //console.log(url);
   
-  var url = "http://api.geonames.org/findNearbyPlaceNameJSON?lat=" + pos.coords.latitude + "&lng=" + pos.coords.longitude+"&username=demo";
+  var url = "http://api.geonames.org/findNearbyPlaceNameJSON?lat=" + pos.coords.latitude + "&lng=" + pos.coords.longitude+"&username=mikrohelen";
   console.log(url);
   
   xhrRequest(url, 'GET',

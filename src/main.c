@@ -10,7 +10,8 @@
 #define IMAGE_CLEAR 7
 #define IMAGE_PARTLY_CLOUDY 8
 #define LOCATION_NAME 20
-  
+#define STORAGE_VERSION_KEY 124 // any previously unused value
+#define CURRENT_STORAGE_VERSION 1.2
 
 static Window *s_main_window;
 static TextLayer *s_time_layer;
@@ -242,6 +243,25 @@ static void init() {
 static void deinit() {
   // Destroy Window
   window_destroy(s_main_window);
+}
+
+static void migrate_persist(void) {
+    uint32_t version = persist_read_int(STORAGE_VERSION_KEY); // defaults to 0 if key is missing.
+
+    if(version > CURRENT_STORAGE_VERSION) {
+        // This is more recent than what we expect; we can't know what happened, so delete it
+        clear_persist();
+    } else if(version == 2) {
+        read_v2_persist();
+        store_persist();
+    } else if(version == 1) {
+        read_v1_persist();
+        store_persist();
+    } else if(version == 0) {
+        // Again, just delete this - perhaps we have multiple unversioned types, or 0 is just too
+        // long ago to be worth handling.
+        clear_persist();
+    }
 }
 
 int main(void) {

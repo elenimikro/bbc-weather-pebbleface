@@ -73,9 +73,9 @@
     },
     "sdkVersion": "2",
     "shortName": "BBC Weather",
-    "uuid": "7ff4941e-e318-43cf-b226-5271bebfe5dc",
+    "uuid": "06fa673d-2a2b-4d03-a879-4bd1965afa67",
     "versionCode": 1,
-    "versionLabel": "1.1",
+    "versionLabel": "1.2",
     "watchapp": {
         "watchface": true
     }
