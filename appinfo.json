@@ -9,10 +9,17 @@
         "location"
     ],
     "companyName": "Pebble",
+    "enableMultiJS": false,
     "longName": "BBC Weather",
     "projectType": "native",
     "resources": {
         "media": [
+            {
+                "file": "images/Bluetooth-30.png",
+                "name": "IMAGE_BLUETOOTH",
+                "targetPlatforms": null,
+                "type": "png"
+            },
             {
                 "file": "images/bbc_tiny.png",
                 "menuIcon": true,
@@ -20,18 +27,13 @@
                 "type": "png"
             },
             {
-                "file": "images/screenshot.png",
-                "name": "IMAGE_SCREENSHOT",
+                "file": "images/sunny.png",
+                "name": "IMAGE_WEATHER_SUNNY",
                 "type": "png"
             },
             {
                 "file": "images/showers.png",
                 "name": "IMAGE_SHOWERS",
-                "type": "png"
-            },
-            {
-                "file": "images/partly_cloudy.png",
-                "name": "IMAGE_PARTLY_CLOUDY",
                 "type": "png"
             },
             {
@@ -42,6 +44,11 @@
             {
                 "file": "images/cloudy.png",
                 "name": "IMAGE_CLOUDY",
+                "type": "png"
+            },
+            {
+                "file": "images/screenshot.png",
+                "name": "IMAGE_SCREENSHOT",
                 "type": "png"
             },
             {
@@ -65,17 +72,21 @@
                 "type": "png"
             },
             {
-                "file": "images/sunny.png",
-                "name": "IMAGE_WEATHER_SUNNY",
+                "file": "images/partly_cloudy.png",
+                "name": "IMAGE_PARTLY_CLOUDY",
                 "type": "png"
             }
         ]
     },
-    "sdkVersion": "2",
+    "sdkVersion": "3",
     "shortName": "BBC Weather",
+    "targetPlatforms": [
+        "aplite",
+        "basalt",
+        "chalk"
+    ],
     "uuid": "06fa673d-2a2b-4d03-a879-4bd1965afa67",
-    "versionCode": 1,
-    "versionLabel": "1.2",
+    "versionLabel": "1.4",
     "watchapp": {
         "watchface": true
     }

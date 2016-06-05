@@ -9,6 +9,7 @@
 #define SUNNY_INTERVALS 6
 #define IMAGE_CLEAR 7
 #define IMAGE_PARTLY_CLOUDY 8
+#define IMAGE_SHOWERS 9
 #define LOCATION_NAME 20
 #define STORAGE_VERSION_KEY 124 // any previously unused value
 #define CURRENT_STORAGE_VERSION 1.2
@@ -20,6 +21,17 @@ static BitmapLayer *s_weather_layer;
 static GBitmap *s_background_bitmap;
 static TextLayer *s_temperature_text_layer;
 static TextLayer *s_weather_text_layer;
+// static TextLayer *s_loading_text_layer;
+
+
+static void bt_handler(bool connected) {
+  // Show current connection state
+  if (connected) {
+    text_layer_set_text(s_weather_text_layer, "Connected. Wait for it...");
+  } else {
+    text_layer_set_text(s_weather_text_layer, "Disconnected. Check Bluetooth Connection...");
+  }
+}
 
 static void update_time() {
   // Get a tm structure
@@ -38,13 +50,11 @@ static void update_time() {
     //Use 12 hour format
     strftime(buffer, sizeof("00:00"), "%I:%M", tick_time);
   }
-  
   strftime(date_buffer, sizeof("Mon 11 Jan"), "%a %e %b", tick_time);
   
   // Display this time on the TextLayer
   text_layer_set_text(s_time_layer, buffer);
   text_layer_set_text(s_date_layer, date_buffer);
-  
 }
 
 static void set_weather_icon(int resource_id){
@@ -70,6 +80,9 @@ static void update_weather_image(int weather_image){
       }
       else if(weather_image == IMAGE_PARTLY_CLOUDY){
         set_weather_icon(RESOURCE_ID_IMAGE_PARTLY_CLOUDY);
+      }
+      else if(weather_image == IMAGE_SHOWERS){
+        set_weather_icon(RESOURCE_ID_IMAGE_SHOWERS);
       }
       else{
         APP_LOG(APP_LOG_LEVEL_ERROR, "Weather Key %d not recognized!", (int)weather_image);
@@ -191,7 +204,9 @@ static void main_window_load(Window *window) {
   text_layer_set_background_color(s_weather_text_layer, GColorClear);
   text_layer_set_text_color(s_weather_text_layer, GColorBlack);
   text_layer_set_text_alignment(s_weather_text_layer, GTextAlignmentCenter);
-  text_layer_set_text(s_weather_text_layer, "Loading BBC Weather...");
+  
+  // Show current connection state
+  bt_handler(connection_service_peek_pebble_app_connection());
   
   // Add it as a child layer to the Window's root layer
   text_layer_set_font(s_temperature_text_layer, fonts_get_system_font(FONT_KEY_GOTHIC_28_BOLD));
@@ -230,6 +245,11 @@ static void outbox_sent_callback(DictionaryIterator *iterator, void *context) {
 static void init() {
   // Create main Window element and assign to pointer
   s_main_window = window_create();
+  
+   // Subscribe to Bluetooth updates
+  connection_service_subscribe((ConnectionHandlers) {
+    .pebble_app_connection_handler = bt_handler
+  });
 
   // Set handlers to manage the elements inside the Window
   window_set_window_handlers(s_main_window, (WindowHandlers) {

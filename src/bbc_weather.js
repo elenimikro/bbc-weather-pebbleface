@@ -43,7 +43,7 @@ function locationSuccess(pos) {
           var item = responseText.substring(responseText.indexOf('<item>'), responseText.indexOf('</item>'));
           var description = item.substring(item.indexOf('<description>'), item.indexOf('</description>'));
           var temperature = description.substring(description.indexOf("Temperature: ")+13, description.indexOf("C (")+1);
-          var conditions = item.substring(item.indexOf("BST: ")+5, item.indexOf(", ")); 
+          var conditions = item.substring(item.indexOf(": ")+2, item.indexOf(", ")); 
           var imageid = 6;
           
           console.log(imageid); 
@@ -51,7 +51,7 @@ function locationSuccess(pos) {
           if(conditions.toLowerCase().indexOf("light cloud") != -1){
              imageid = 5;
           }
-          else if(conditions.toLowerCase().indexOf("cloudy") != -1){
+          else if(conditions.toLowerCase().indexOf("cloudy") != -1 || conditions.toLowerCase().indexOf("thick cloud") != -1){
             imageid = 4;
           }
           else if(conditions.toLowerCase().indexOf("sunny intervals") != -1){
@@ -65,6 +65,9 @@ function locationSuccess(pos) {
           }
           else if (conditions.toLowerCase().indexOf("partly cloudy") != -1){
             imageid = 8;
+          }
+          else if (conditions.toLowerCase().indexOf("showers") != -1 || conditions.toLowerCase().indexOf("rainy") != -1){
+            imageid = 9;
           }
           
           
