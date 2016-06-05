@@ -18,7 +18,9 @@ static Window *s_main_window;
 static TextLayer *s_time_layer;
 static TextLayer *s_date_layer;
 static BitmapLayer *s_weather_layer;
+static BitmapLayer *s_bluetooth_layer;
 static GBitmap *s_background_bitmap;
+static GBitmap *s_bluetooth_bitmap;
 static TextLayer *s_temperature_text_layer;
 static TextLayer *s_weather_text_layer;
 // static TextLayer *s_loading_text_layer;
@@ -27,9 +29,15 @@ static TextLayer *s_weather_text_layer;
 static void bt_handler(bool connected) {
   // Show current connection state
   if (connected) {
-    text_layer_set_text(s_weather_text_layer, "Connected. Wait for it...");
-  } else {
-    text_layer_set_text(s_weather_text_layer, "Disconnected. Check Bluetooth Connection...");
+     s_bluetooth_bitmap = gbitmap_create_with_resource(-1);
+     bitmap_layer_set_bitmap(s_bluetooth_layer, s_bluetooth_bitmap);
+  }
+  else{
+    //Create bluetooth image layer
+    s_bluetooth_bitmap = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_BLUETOOTH_BLACK);
+//     s_bluetooth_bitmap = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_BLUETOOTH_BLACK);
+    bitmap_layer_set_bitmap(s_bluetooth_layer, s_bluetooth_bitmap);
+    vibes_short_pulse();
   }
 }
 
@@ -192,18 +200,24 @@ static void main_window_load(Window *window) {
   layer_add_child(window_get_root_layer(window), bitmap_layer_get_layer(s_weather_layer));
   
   //Create temperature text layer
-  s_temperature_text_layer = text_layer_create(GRect(76, 70, 69, 60));
+  s_temperature_text_layer = text_layer_create(GRect(76, 63, 69, 60));
   text_layer_set_background_color(s_temperature_text_layer, GColorClear);
   text_layer_set_text_color(s_temperature_text_layer, GColorBlack);
   text_layer_set_text_alignment(s_temperature_text_layer, GTextAlignmentCenter);
   text_layer_set_text(s_temperature_text_layer, " ");
   
+  //Create bluetooth image layer
+  s_bluetooth_bitmap = gbitmap_create_with_resource(-1);
+  s_bluetooth_layer = bitmap_layer_create(GRect(76, 82, 69, 60));
+  bitmap_layer_set_bitmap(s_bluetooth_layer, s_bluetooth_bitmap);
+  layer_add_child(window_get_root_layer(window), bitmap_layer_get_layer(s_bluetooth_layer));
   
   //Create weather text Layer
   s_weather_text_layer = text_layer_create(GRect(0, 115, 144, 80));
   text_layer_set_background_color(s_weather_text_layer, GColorClear);
   text_layer_set_text_color(s_weather_text_layer, GColorBlack);
   text_layer_set_text_alignment(s_weather_text_layer, GTextAlignmentCenter);
+  text_layer_set_text(s_weather_text_layer, "Wait for it...");
   
   // Show current connection state
   bt_handler(connection_service_peek_pebble_app_connection());
@@ -230,6 +244,12 @@ static void main_window_unload(Window *window) {
 
   //Destroy BitmapLayer
   bitmap_layer_destroy(s_weather_layer);
+  
+  //Destroy Bluetooth GBitmap
+  gbitmap_destroy(s_bluetooth_bitmap);
+
+  //Destroy Bluetooth BitmapLayer
+  bitmap_layer_destroy(s_bluetooth_layer);
   
   // Destroy weather elements
   text_layer_destroy(s_temperature_text_layer);

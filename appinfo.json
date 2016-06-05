@@ -17,8 +17,12 @@
             {
                 "file": "images/Bluetooth-30.png",
                 "name": "IMAGE_BLUETOOTH",
-                "targetPlatforms": null,
-                "type": "png"
+                "targetPlatforms": [
+                    "aplite",
+                    "basalt",
+                    "chalk"
+                ],
+                "type": "png-trans"
             },
             {
                 "file": "images/bbc_tiny.png",
